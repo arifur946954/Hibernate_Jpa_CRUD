@@ -7,6 +7,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.List;
+
 @SpringBootApplication
 
 public class CrudApplication {
@@ -17,20 +19,43 @@ public class CrudApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(StudentDao studentDao){
 		return runner->{
-createStudent(studentDao);
+//createStudent(studentDao);
+			readStudent(studentDao);
+			queryForStudent(studentDao);
 		};
 	}
 
-	private void createStudent(StudentDao studentDao) {
-		//create student object
-		System.out.println("create new student: ");
-     Student tempStudent =new Student("shahid","Afridi","afridi@gmail.com");
-		//save student obj
-	studentDao.save(tempStudent);
-		System.out.println("register successfully");
+	private void queryForStudent(StudentDao studentDao) {
+	List<Student> thStudent= studentDao.findByAll();
+	for (Student tempStudent : thStudent){
+		System.out.println(tempStudent);
 
-		//show student
-		System.out.println("output is "+tempStudent.getId()+"Email:"+tempStudent.getEmail());
 	}
+	}
+
+	private void readStudent(StudentDao studentDao) {
+		//create student
+		Student tempStudent=new Student("Sarif","ahmed","sarif@gmail.com");
+		//save
+		studentDao.save(tempStudent);
+		//display
+		int thId= tempStudent.getId();
+	Student idf=	studentDao.findById(thId);
+		System.out.println("ID is :" +idf);
+
+		//retrive student
+	}
+
+//	private void createStudent(StudentDao studentDao) {
+//		//create student object
+//		System.out.println("create new student: ");
+//     Student tempStudent =new Student("Rejuan","Ahmed","rejuan@gmail.com");
+//		//save student obj
+//	studentDao.save(tempStudent);
+//		System.out.println("register successfully");
+//
+//		//show student
+//		System.out.println("output is "+tempStudent.getId()+"Email:"+tempStudent.getEmail());
+//	}
 
 }
