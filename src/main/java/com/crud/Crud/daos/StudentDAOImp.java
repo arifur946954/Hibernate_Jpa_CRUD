@@ -21,7 +21,7 @@ public class StudentDAOImp implements StudentDao {
 
 
     //implement save mathod
-    @Transactional
+    @Transactional//her we couldnt write query
     @Override
     public void save(Student theStudent) {
     entityManager.persist(theStudent);
@@ -36,8 +36,25 @@ public class StudentDAOImp implements StudentDao {
 
     @Override
     public List<Student> findByAll() {
+      //  TypedQuery<Student> thQuery=entityManager.createQuery("FROM Student order by lastName asc", Student.class);
         TypedQuery<Student> thQuery=entityManager.createQuery("FROM Student", Student.class);
     return  thQuery.getResultList();
 
     }
+
+    @Override
+    public List<Student> findByLastName(String thelastName) {
+    TypedQuery<Student> thQuery=entityManager.createQuery("FROM Student Where lastName=:theData",Student.class);
+    thQuery.setParameter("theData",thelastName);
+        return thQuery.getResultList();
+    }
+
+    @Override
+    @Transactional
+    public void updates(Student theStudent) {
+    entityManager.merge(theStudent);
+
+    }
+
+
 }
