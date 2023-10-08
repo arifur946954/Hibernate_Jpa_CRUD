@@ -19,15 +19,30 @@ public class CrudApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(StudentDao studentDao){
 		return runner->{
-//createStudent(studentDao);
+           //createStudent(studentDao);
 			//readStudent(studentDao);
 			//queryForStudent(studentDao);
 			//queryForStudentByLastNAme(studentDao);
-			updateStudent(studentDao);
+			//updateStudent(studentDao);
+			//deleteStudent(studentDao);
+			deleteAllStudent(studentDao);
 
 
 
 		};
+	}
+
+	private void deleteAllStudent(StudentDao studentDao) {
+		System.out.println("delete all student from database");
+	int umRowDeleted=	studentDao.deleteAll();
+		System.out.println("after deleting"+umRowDeleted);
+	}
+
+	private void deleteStudent(StudentDao studentDao) {
+		//set id which one i want to delete
+		int stId=3;
+		//
+		studentDao.delete(stId);
 	}
 
 	private void updateStudent(StudentDao studentDao) {
@@ -77,16 +92,16 @@ public class CrudApplication {
 		//retrive student
 	}
 
-//	private void createStudent(StudentDao studentDao) {
-//		//create student object
-//		System.out.println("create new student: ");
-//     Student tempStudent =new Student("Rejuan","Ahmed","rejuan@gmail.com");
-//		//save student obj
-//	studentDao.save(tempStudent);
-//		System.out.println("register successfully");
-//
-//		//show student
-//		System.out.println("output is "+tempStudent.getId()+"Email:"+tempStudent.getEmail());
-//	}
+	private void createStudent(StudentDao studentDao) {
+		//create student object
+		System.out.println("create new student: ");
+     Student tempStudent =new Student("Arifur","rahman","arif@gmail.com");
+		//save student obj
+	studentDao.save(tempStudent);
+		System.out.println("register successfully");
+
+		//show student
+		System.out.println("output is "+tempStudent.getId()+"Email:"+tempStudent.getEmail());
+	}
 
 }
